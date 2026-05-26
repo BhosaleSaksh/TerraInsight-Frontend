@@ -78,3 +78,6 @@ src/
 ├── App.jsx              # Application root & data pipelining
 └── index.css            # Tailwind directives & global scrollbar configs
 ```
+
+## Live Demo
+https://terra-insight-frontend-six.vercel.app/
