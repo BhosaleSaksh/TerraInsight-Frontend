@@ -4,7 +4,7 @@ import { demandData } from '../data/demandData'
 
 export const usePlanningStore = create(
   persist(
-    (set, get) => ({
+    (set) => ({
       // 1. Initial State
       items: demandData,
       selectedItem: demandData[0] || null, // default to first item if available

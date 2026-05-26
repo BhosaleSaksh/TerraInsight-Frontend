@@ -1,4 +1,3 @@
-import React from 'react'
 import { Layers, Activity, TrendingUp, Tag } from 'lucide-react'
 import { calculateWeeklyTotals } from '../../utils/demandCalculations'
 

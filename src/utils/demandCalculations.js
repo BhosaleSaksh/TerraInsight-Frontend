@@ -13,9 +13,8 @@
  * @returns {'green' | 'amber' | 'red'}
  */
 export const getDemandStatusColor = (demand, target) => {
-  if (demand === 0 || !target || target === 0) {
-    return 'red'
-  }
+  if (demand === 0) return 'red'
+  if (!target || target === 0) return 'green'
   
   const percentage = (demand / target) * 100
   

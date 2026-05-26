@@ -1,4 +1,3 @@
-import React from 'react'
 import { Bell, RefreshCw, Moon, Sun, User, Database } from 'lucide-react'
 
 export default function Header({ isDarkMode, setIsDarkMode }) {

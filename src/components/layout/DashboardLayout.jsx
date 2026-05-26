@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import Header from './Header'
 import { Grid3X3, BarChart3, Settings, Users, LogOut, ChevronRight, ShieldAlert } from 'lucide-react'
 
 export default function DashboardLayout({ children }) {
-  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme')
+      return savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)
+    }
+    return false
+  })
   const [isSidebarOpen, setIsSidebarOpen] = useState(true)
-
-  // Initialize theme from system preference or local storage
-  useEffect(() => {
-    const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const savedTheme = localStorage.getItem('theme')
-    const dark = savedTheme === 'dark' || (!savedTheme && systemPrefersDark)
-    setIsDarkMode(dark)
-  }, [])
-
   // Sync class on documentElement
   useEffect(() => {
     if (isDarkMode) {

@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import DashboardLayout from './components/layout/DashboardLayout'
 import FilterBar from './components/filters/FilterBar'
 import DemandGrid from './components/grid/DemandGrid'

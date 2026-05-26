@@ -1,4 +1,3 @@
-import React from 'react'
 import { Search, SlidersHorizontal, Plus, Download, Upload, RotateCcw } from 'lucide-react'
 import { usePlanningStore } from '../../store/usePlanningStore'
 

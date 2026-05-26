@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Edit2, SearchX } from 'lucide-react'
 import { getDemandStatusColor, calculateRowTotal, calculateWeeklyTotals } from '../../utils/demandCalculations'
 import { usePlanningStore } from '../../store/usePlanningStore'

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Calendar, Layers, DollarSign, TrendingUp, AlertTriangle, X, Edit3, BarChart2, Trash2, CheckCircle, HelpCircle } from 'lucide-react'
 import { ResponsiveContainer, ComposedChart, Area, XAxis, YAxis, Tooltip, CartesianGrid, ReferenceLine } from 'recharts'
 import { usePlanningStore } from '../../store/usePlanningStore'
