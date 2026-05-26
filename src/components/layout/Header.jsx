@@ -49,8 +49,8 @@ export default function Header({ isDarkMode, setIsDarkMode }) {
           <div className="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
 
           <div className="flex items-center gap-3 pl-1">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-150 dark:bg-slate-800 border border-slate-250 dark:border-slate-700 text-slate-600 dark:text-slate-300">
-              <User className="h-4.5 w-4.5" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300">
+              <User className="h-4 w-4" />
             </div>
             <div className="hidden md:block text-left">
               <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">Sakshi Sharma</p>

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { Edit2 } from 'lucide-react'
+import { Edit2, SearchX } from 'lucide-react'
 import { getDemandStatusColor, calculateRowTotal, calculateWeeklyTotals } from '../../utils/demandCalculations'
 import { usePlanningStore } from '../../store/usePlanningStore'
 
-export default function DemandGrid({ items = [], weeks = [], selectedItemId, onSelectItem }) {
+export default function DemandGrid({ items = [], weeks = [], selectedItemId, onSelectItem, isLoading = false }) {
   const [editingCell, setEditingCell] = useState(null) // { itemId, weekIndex }
   const [tempValue, setTempValue] = useState('')
   
@@ -40,9 +40,6 @@ export default function DemandGrid({ items = [], weeks = [], selectedItemId, onS
   }
 
   // Cell conditional styling based on performance target
-  // - Green: demand >= 90% of target
-  // - Amber: demand between 50% and 89%
-  // - Red: demand < 50% OR zero
   const getCellClasses = (colorStatus) => {
     switch (colorStatus) {
       case 'green':
@@ -121,6 +118,57 @@ export default function DemandGrid({ items = [], weeks = [], selectedItemId, onS
     )
   }
 
+  // Skeleton Loader for polished UX
+  if (isLoading) {
+    return (
+      <div className="w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 transition-all duration-300">
+        <div className="overflow-x-auto overflow-y-auto max-h-[600px] scrollbar-thin">
+          <table className="w-full border-collapse text-left text-sm text-slate-600 dark:text-slate-400 relative">
+            <thead className="bg-slate-50 dark:bg-slate-900/90 text-slate-500 dark:text-slate-400 border-b border-slate-200 dark:border-slate-800 text-[11px] font-bold uppercase tracking-wider sticky top-0 z-20 backdrop-blur-sm shadow-sm">
+              <tr>
+                <th scope="col" className="px-6 py-4 min-w-[180px]">Item</th>
+                <th scope="col" className="px-6 py-4">Category</th>
+                <th scope="col" className="px-6 py-4">Region</th>
+                <th scope="col" className="px-6 py-4 text-center">Status</th>
+                {displayWeeks.map((week) => (
+                  <th key={week} scope="col" className="px-3 py-4 text-right min-w-[75px]">{week}</th>
+                ))}
+                <th scope="col" className="px-6 py-4 text-right min-w-[95px]">Total</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
+              {Array.from({ length: 5 }).map((_, idx) => (
+                <tr key={idx} className="animate-pulse">
+                  <td className="px-6 py-4">
+                    <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-2/3"></div>
+                    <div className="h-2 bg-slate-200 dark:bg-slate-800 rounded w-1/3 mt-2"></div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2"></div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-1/2"></div>
+                  </td>
+                  <td className="px-6 py-4 text-center">
+                    <div className="h-5 bg-slate-200 dark:bg-slate-800 rounded-full w-16 mx-auto"></div>
+                  </td>
+                  {displayWeeks.map((_, wIdx) => (
+                    <td key={wIdx} className="px-3 py-4">
+                      <div className="h-3 bg-slate-200 dark:bg-slate-800 rounded w-2/3 ml-auto"></div>
+                    </td>
+                  ))}
+                  <td className="px-6 py-4">
+                    <div className="h-4 bg-slate-200 dark:bg-slate-800 rounded w-2/3 ml-auto"></div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-slate-800 dark:bg-slate-900 transition-all duration-300">
       {/* Scrollable table container with sticky header support */}
@@ -144,8 +192,16 @@ export default function DemandGrid({ items = [], weeks = [], selectedItemId, onS
           <tbody className="divide-y divide-slate-100 dark:divide-slate-800/80">
             {items.length === 0 ? (
               <tr>
-                <td colSpan={5 + displayWeeks.length} className="px-6 py-12 text-center text-slate-400 dark:text-slate-500 font-medium">
-                  No operational items registered.
+                <td colSpan={5 + displayWeeks.length} className="px-6 py-20 text-center">
+                  <div className="flex flex-col items-center justify-center max-w-sm mx-auto">
+                    <div className="rounded-full bg-slate-100 dark:bg-slate-800 p-4 mb-4 text-slate-400 dark:text-slate-500">
+                      <SearchX className="h-8 w-8" />
+                    </div>
+                    <h3 className="text-base font-bold text-slate-800 dark:text-slate-200">No matching SKUs found</h3>
+                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-2 leading-relaxed">
+                      Your filters combined yielded no active operational results. Try adjusting search terms or resetting constraints.
+                    </p>
+                  </div>
                 </td>
               </tr>
             ) : (
